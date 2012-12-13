@@ -1,29 +1,36 @@
 module Arroz
   class KNN
     
-    attr_reader :data
+    attr_reader :data, :k
 
     # The label attribute in the data array must be in the first position
-    def initialize(data)
+    def initialize(data, k=1)
       @data = data
+      @k = k
     end
 
-    def nearest_neighbor(element)
-      min_distance = 10_000_000
-      nearest = nil
+    ## Returns the predicted class of the element passed
+    def classify(element)
+      neighbors = nearest_neighbors(element)
 
+      neighbor_classes = neighbors.map(&:last)
+      classes = neighbor_classes.uniq
+
+      classes.zip(classes.map { |c| neighbor_classes.count(c) }).
+        sort_by(&:last).last.first
+    end
+
+  private 
+
+    def nearest_neighbors(element)
+      distances = []
+      
       @data.each do |datum|
-        distance = distance(element, datum[1..-1])
-        if distance < min_distance
-          min_distance = distance
-          nearest = datum
-        end
+        distances << [distance(element, datum[1..-1]), datum.first]
       end
 
-      nearest
+      distances.sort.take(k)
     end
-
-  protected 
 
     def distance(e1, e2)
       raise NotImplementedError
