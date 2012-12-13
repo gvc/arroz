@@ -1,5 +1,6 @@
 module Arroz::Distances
   module Euclidean
+    extend self
 
     def distance(e1, e2)
       sum = e1.zip(e2).map { |pair| (pair.first.to_f - pair.last.to_f)**2 }.
