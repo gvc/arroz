@@ -2,6 +2,7 @@ class KNN
   
   attr_reader :data
 
+  # The label attribute in the data array must be in the first position
   def initialize(data)
     @data = data
   end
@@ -11,7 +12,7 @@ class KNN
     nearest = nil
 
     @data.each do |datum|
-      distance = distance(element, datum)
+      distance = distance(element, datum[1..-1])
       if distance < min_distance
         min_distance = distance
         nearest = datum

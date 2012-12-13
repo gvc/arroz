@@ -4,7 +4,7 @@ module Arroz
   describe KNN do
     
     describe 'when trying to find the nearest neighbor' do
-      let(:data) { [[1, 2], [3, 4], [1,5]] }
+      let(:data) { [['A', 1, 2], ['B', 3, 4], ['A', 1,5]] }
 
       it 'raises an error if the distance function is undefined' do
         knn = KNN.new(data)
@@ -18,7 +18,7 @@ module Arroz
         knn = KNN.new(data)
         knn.extend(Distances::Euclidean)
 
-        knn.nearest_neighbor([1, 3]).should == [1, 2]
+        knn.nearest_neighbor([1, 3]).should == ['A', 1, 2]
       end
     end
   end
