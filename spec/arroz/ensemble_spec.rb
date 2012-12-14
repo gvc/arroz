@@ -15,7 +15,9 @@ module Arroz
       knn_3 = stub(KNN)
       knn_3.should_receive(:classify).with(element).and_return('B')
 
-      Ensemble.new([knn_1, knn_2, knn_3]).classify(element).should == 'B'
+      ensemble = Ensemble.new([knn_1, knn_2, knn_3])
+      
+      expect(ensemble.classify(element)).to eq('B')
     end
 
     describe 'when classifying projections' do
@@ -41,7 +43,8 @@ module Arroz
         knn_3.should_receive(:classify).with(element_3).and_return('B')
 
         ensemble = Ensemble.new([knn_1, knn_2, knn_3])
-        ensemble.classify_projections([element_1, element_2, element_3]).should == 'B'
+        
+        expect(ensemble.classify_projections([element_1, element_2, element_3])).to eq('B')
       end
     end
   end

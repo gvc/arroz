@@ -9,16 +9,16 @@ module Arroz
       it 'raises an error if the distance function is undefined' do
         knn = KNN.new(data)
 
-        -> {
+        expect {
           knn.classify([1,2])
-        }.should raise_error(NotImplementedError)
+        }.to raise_error(NotImplementedError)
       end
 
       it 'returns the correct neighbor class according to the distance' do
         knn = KNN.new(data, 3)
         knn.extend(Distances::Euclidean)
 
-        knn.classify([1, 3]).should == 'B'
+        expect(knn.classify([1, 3])).to eq('B')
       end
     end
   end
